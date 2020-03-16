@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>system.h</itemPath>
+      <itemPath>ILI9225.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -15,12 +16,14 @@
                    projectFiles="true">
       <itemPath>main.c</itemPath>
       <itemPath>config.c</itemPath>
+      <itemPath>ILI9225.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>README.md</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -156,6 +159,7 @@
         <property key="stack-size-main" value="auto"/>
         <property key="stack-type" value="compiled"/>
         <property key="user-pack-device-support" value=""/>
+        <appendMe value="--MAXIPIC"/>
       </XC8-config-global>
     </conf>
   </confs>
