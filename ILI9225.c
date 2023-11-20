@@ -15,6 +15,9 @@
 
 #include <xc.h>
 #include "ILI9225.h"
+#include "system.h"
+#include "mytypes.h"        /* type declarations */
+
 
 
 
@@ -29,11 +32,18 @@
  * 40 kHz clock compared to 2 MHz clock with hardware SPI).
  */
 void spi_write(unsigned char data) {
-    
+#ifndef DEBUG
+    unsigned char TempVar;
+    TempVar = SSPBUF;  // Clears BF
+    PIR1bits.SSP1IF = 0;  // Clear interrupt flag
+    SSPCON1bits.WCOL = 0;  //Clear any previous write collision
+
     //Write data to SSPBUFF
     SPIBUF = data;
     //Wait for transmission to finish
-    while(!(SPIIDLE));
+    while( !PIR1bits.SSP1IF );  // wait until bus cycle complete
+    //while(!(SPIIDLE));
+#endif
 }
 
 /*
@@ -461,11 +471,11 @@ void draw_bitmap(int x1, int y1, int scale, unsigned int *bmp) {
 		//this loop does the vertical axis scaling (two of each line))
 		for (int sv = 0; sv < scale; sv++) {
 			for (int j = 0; j <= width; j++) {
-				//Choose which byte to display depending on the screen orientation
+            	//Choose which byte to display depending on the screen orientation
 				//NOTE: We add a byte because of the first two bytes being dimension data in the array
 				if (LANDSCAPE)
 					this_byte = bmp[(height * (j + 1)) - i + 1];
-				else
+                else
 					this_byte = bmp[(width * (i)) + j + 1];
 
 				//And this loop does the horizontal axis scale (two of each pixels on the line))

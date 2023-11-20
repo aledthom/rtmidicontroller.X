@@ -218,9 +218,9 @@ extern "C" {
     //LCD Display also need a pin for reset and a pin for cmd/data
     //NOTE: on older micros this will just be RC0, RC1, etc.
     //On newer chips we have to use the latch registers.
-    #define CSX     LATCbits.LATC3 //Chip select
-    #define RESX    LATAbits.LATA2 //Reset pin
-    #define CMD     LATCbits.LATC5 //Command select
+    #define CSX     LATCbits.LATC4 //Chip select
+    #define RESX    LATCbits.LATC5 //Reset pin
+    #define CMD     LATCbits.LATC3 //Command select
     //Software SPI pins if required
     //#define SDO     LATC0
     //#define SCK     LATC1
@@ -231,7 +231,7 @@ extern "C" {
     //SPI Bus status register and transmission buffer
     //Set these to suit your particular microcontroller
     #define SPIBUF  SSP1BUF
-    #define SPIIDLE PIR1bits.SSP1IF
+    #define SPIIDLE SSP1STATbits.BF//PIR1bits.SSP1IF
     
     void spi_write(unsigned char data);
     void lcd_write_command(unsigned char data);
